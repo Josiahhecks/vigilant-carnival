@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Ultra Fast Roblox User Lookup (Go)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+
+    <div class="container">
+        <header>
+            <div class="badge-go">POWERED BY GO & GOROUTINES</div>
+            <h1>⚡ Fast Roblox Lookup</h1>
+            <p class="subtitle">Search any Roblox Username or User ID with sub-second parallel endpoint retrieval.</p>
+        </header>
+
+        <section class="search-section">
+            <form id="search-form" onsubmit="event.preventDefault(); performSearch();">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="query-input" placeholder="Enter Username or User ID (e.g., Roblox, Builderman, 1)" required autocomplete="off">
+                    <button type="submit" id="search-btn">
+                        <span>Search</span>
+                        <div class="spinner hidden" id="btn-spinner"></div>
+                    </button>
+                </div>
+            </form>
+            <div class="quick-tags">
+                <span>Try:</span>
+                <button onclick="quickSearch('Roblox')">Roblox</button>
+                <button onclick="quickSearch('Builderman')">Builderman</button>
+                <button onclick="quickSearch('1')">ID: 1</button>
+                <button onclick="quickSearch('Stickmasterluke')">Stickmasterluke</button>
+            </div>
+        </section>
+
+        <!-- Status & Errors -->
+        <div id="status-container" class="status-container hidden"></div>
+
+        <!-- Result Card -->
+        <main id="result-card" class="result-card hidden">
+            <!-- Header section of result -->
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img id="avatar-img" src="" alt="User Avatar" class="avatar-img">
+                    <div id="status-indicator" class="status-indicator offline"></div>
+                </div>
+                <div class="profile-info">
+                    <div class="name-row">
+                        <h2 id="display-name">Display Name</h2>
+                        <span id="presence-badge" class="badge-presence">Offline</span>
+                    </div>
+                    <div class="username-row">
+                        <span id="username">@Username</span>
+                        <span class="user-id-chip">ID: <span id="user-id">0</span></span>
+                    </div>
+                    <p id="description" class="user-bio">User description goes here...</p>
+                    <div class="created-date">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Joined <span id="join-date">Jan 1, 2006</span>
+                    </div>
+                </div>
+                <div class="lookup-speed">
+                    <span class="speed-time" id="lookup-time">0 ms</span>
+                    <span class="speed-label">Fetch Time</span>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value" id="friends-count">0</span>
+                    <span class="stat-label">Friends</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="followers-count">0</span>
+                    <span class="stat-label">Followers</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="following-count">0</span>
+                    <span class="stat-label">Following</span>
+                </div>
+            </div>
+
+            <!-- Avatar Types tab preview -->
+            <div class="avatar-types-section">
+                <h3>Avatar Views</h3>
+                <div class="avatar-previews">
+                    <div class="avatar-preview-box">
+                        <img id="headshot-img" src="" alt="Headshot">
+                        <span>Headshot</span>
+                    </div>
+                    <div class="avatar-preview-box">
+                        <img id="bust-img" src="" alt="Bust">
+                        <span>Bust</span>
+                    </div>
+                    <div class="avatar-preview-box">
+                        <img id="full-img" src="" alt="Full Body">
+                        <span>Full Body</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groups Section -->
+            <div class="details-section">
+                <h3>Groups (<span id="groups-count">0</span>)</h3>
+                <div id="groups-list" class="groups-grid">
+                    <!-- Dynamic Groups -->
+                </div>
+            </div>
+
+            <!-- Badges Section -->
+            <div class="details-section">
+                <h3>Badges Recent (<span id="badges-count">0</span>)</h3>
+                <div id="badges-list" class="badges-grid">
+                    <!-- Dynamic Badges -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>Built with High Performance Go Backend | Roblox User Lookup</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
