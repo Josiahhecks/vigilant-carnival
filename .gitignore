@@ -1,0 +1,5 @@
+# .gitignore
+server
+*.exe
+*.test
+/home/jules/verification/
